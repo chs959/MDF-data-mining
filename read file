@@ -1,0 +1,22 @@
+#  python code 
+#  base on AMAMMDF lib
+import asammdf as md
+
+
+def lean_sync(mdffile,wantlist):  ## acammdf version 
+    global itemlist
+    itemlist=[]
+    f1=md.MDF(mdffile,channels=wantlist)
+#     f1=md.MDF(mdffile)
+#     print (f1)
+    f2=f1.resample(raster=0.01) # all items in 10ms  
+    f3=f1.iter_channels()
+    for i in f3:
+        itemlist.append(i.name)
+    return f2  ## asammdf version
+def data_xy(file,item): ## ## acammdf version 
+    array=file.get(item)
+    arrayX=array.timestamps
+#     print (array.name)
+    arrayY=array.samples
+    return [arrayY, arrayX]  ## asammdf version
